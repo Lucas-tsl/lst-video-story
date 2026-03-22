@@ -22,11 +22,12 @@ jobs:
           php-version: '7.4'
           tools: phpcs
 
-      - name: Install WordPress Coding Standards
+      - name: Install Dependencies
         run: |
-          git clone -b 3.0.0 https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
-          phpcs --config-set installed_paths $(pwd)/wpcs
+          composer init --no-interaction
+          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer require --dev wp-coding-standards/wpcs:"^3.0"
+          ./vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs
 
       - name: Run PHP CodeSniffer
-        # Runs PHPCS against the plugin files ignoring some strict rules that might be too aggressive for a small plugin initially
-        run: phpcs --standard=WordPress --extensions=php --ignore=wpcs/ .
+        run: ./vendor/bin/phpcs --standard=WordPress --extensions=php --ignore=vendor/ .
