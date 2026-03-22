@@ -23,7 +23,7 @@ jobs:
           tools: cs2pr, phpcs
 
       - name: Run PHPCS with WordPress Coding Standards
-        uses: 10up/wpcs-action@v1.4
+        uses: 10up/wpcs-action@v1.4.0
         with:
           standard: 'WordPress'
           paths: '.'
