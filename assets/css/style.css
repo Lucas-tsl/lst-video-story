@@ -1,0 +1,128 @@
+.lst-wrapper-ultra { width: 100% !important; margin: 25px 0 !important; clear: both; display: block; }
+.lst-row-ultra { 
+    display: flex !important; 
+    gap: 18px !important; 
+    justify-content: flex-start !important; 
+    overflow-x: auto !important; 
+    padding: 10px 5px !important;
+    scrollbar-width: none;
+}
+.lst-row-ultra::-webkit-scrollbar { display: none; }
+
+.lst-container-ultra { flex: 0 0 auto !important; width: 95px !important; text-align: center !important; cursor: pointer; }
+/* Le cercle principal */
+.lst-circle-ultra { 
+    width: 85px !important; 
+    height: 85px !important; 
+    border-radius: 50% !important; 
+    position: relative !important; /* Important pour que le badge se place par rapport à lui */
+    margin: 0 auto !important; 
+    padding: 3px !important;
+    background: linear-gradient(white, white) padding-box, 
+                linear-gradient(45deg, #101820, #ccc, #101820) border-box !important;
+    border: 3px solid transparent !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important;
+    /* Supprimer overflow: hidden ici pour laisser dépasser le badge */
+}
+
+/* L'image à l'intérieur doit rester ronde */
+.lst-img-ultra { 
+    width: 100% !important; 
+    height: 100% !important; 
+    object-fit: cover !important; 
+    border-radius: 50% !important; 
+    display: block !important;
+}
+
+/* Le badge PLAY (à cheval sur le bord) */
+.lst-play-ultra { 
+    position: absolute !important; 
+    bottom: -2px !important; /* On le descend pour qu'il touche le bord */
+    right: -2px !important;  /* On le décale vers la droite */
+    background: #101820 !important; 
+    width: 24px !important; 
+    height: 24px !important; 
+    border-radius: 50% !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: center !important; 
+    border: 2px solid white !important; 
+    z-index: 10 !important; /* Force l'affichage au-dessus de tout */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3) !important;
+}
+.lst-label-ultra { 
+    margin-top: 10px !important; font-size: 11px !important; font-weight: 700; 
+    color: #101820; text-transform: uppercase; font-family: sans-serif; 
+}
+
+/* MODAL */
+.lst-modal-overlay { 
+    position: fixed !important; top:0; left:0; width:100%; height:100%; 
+    background:rgba(0,0,0,0.9); z-index:9999999; display:none; 
+    justify-content:center; align-items:center; backdrop-filter:blur(10px); 
+}
+.lst-modal-content { position:relative; width:92%; max-width:420px; }
+.lst-video-container { position:relative !important; padding-bottom:177%; height:0; border-radius:25px; overflow: hidden !important; background:#000; }
+.lst-video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
+.lst-modal-close { position:absolute; top:-55px; right:0; color:#fff; font-size:50px; background:none; border:none; cursor:pointer; }
+
+@media (max-width: 600px) {
+    .lst-circle-ultra { width: 75px !important; height: 75px !important; }
+    .lst-container-ultra { width: 80px !important; }
+}
+
+/* Positionnement de la vidéo en relatif pour que le bouclier se place par dessus */
+.lst-video { 
+    position: relative; 
+    padding-bottom: 177.77%; /* Ratio 9:16 vertical */
+    height: 0; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    background: #000; 
+}
+
+.lst-video iframe { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 1; 
+}
+
+.lst-video-container {
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* PROTECTION HAUTE : Bloque le titre, l'avatar et le lien de chaîne */
+.lst-guard-top {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 25% !important; /* On monte à 25% pour être sûr de couvrir tout le titre */
+    z-index: 9999 !important; /* Priorité maximale */
+    background: transparent !important;
+    pointer-events: auto !important; /* Capte le clic avant YouTube */
+}
+
+/* PROTECTION BASSE : Bloque le logo YouTube, "Partager" et "Regarder sur YouTube" */
+.lst-guard-bottom {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 18% !important; /* Couvre la zone du logo et du bouton Watch on YT */
+    z-index: 9999 !important;
+    background: transparent !important;
+    pointer-events: auto !important;
+}
+
+/* On s'assure que l'iframe ne dépasse jamais en z-index */
+#storyPlayer {
+    position: absolute !important;
+    z-index: 1 !important;
+}
