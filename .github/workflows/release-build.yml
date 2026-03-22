@@ -1,0 +1,31 @@
+name: Build Release Auto-ZIP
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build Release Artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build zip for release
+        run: |
+          mkdir -p lst-video-story
+          # Copier uniquement les fichiers nécessaires pour la production
+          cp -r assets lst-video-story.php index.php readme.txt README.md lst-video-story/
+          zip -r lst-video-story.zip lst-video-story
+
+      - name: Upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./lst-video-story.zip
+          asset_name: lst-video-story.zip
+          asset_content_type: application/zip

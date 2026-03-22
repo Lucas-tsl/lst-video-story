@@ -1,0 +1,30 @@
+name: CI - Code Quality
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  phpcs:
+    name: Run PHP CodeSniffer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: phpcs
+
+      - name: Install WordPress Coding Standards
+        run: |
+          git clone -b 3.0.0 https://github.com/WordPress/WordPress-Coding-Standards.git wpcs
+          phpcs --config-set installed_paths $(pwd)/wpcs
+
+      - name: Run PHP CodeSniffer
+        # Runs PHPCS against the plugin files ignoring some strict rules that might be too aggressive for a small plugin initially
+        run: phpcs --standard=WordPress --extensions=php --ignore=wpcs/ .
