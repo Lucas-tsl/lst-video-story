@@ -55,39 +55,44 @@ function lst_video_story_shortcode() {
     <div class="lst-wrapper-ultra">
         <div class="lst-row-ultra" id="lst-row">
             <?php 
-            for ($i = 1; $i <= 4; $i++) : 
-                $yt_input  = get_field('id_video_youtube_' . $i);
-                $bulle_url = get_field('apercu_video_bulle_' . $i);
-                $label     = get_field('label_bulle_' . $i) ?: __('Story', 'lst-video-story');
+            for ( $i = 1; $i <= 4; $i++ ) { 
+                $yt_input  = get_field( 'id_video_youtube_' . $i );
+                $bulle_url = get_field( 'apercu_video_bulle_' . $i );
+                $label     = get_field( 'label_bulle_' . $i ) ? get_field( 'label_bulle_' . $i ) : __( 'Story', 'lst-video-story' );
                 
-                if ($yt_input && $bulle_url) :
+                if ( $yt_input && $bulle_url ) {
                     // Extraction ID Youtube sécurisée
-                    if (preg_match('%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $yt_input, $match)) {
+                    if ( preg_match( '%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $yt_input, $match ) ) {
                         $video_id = $match[1];
-                    } else { $video_id = $yt_input; }
+                    } else { 
+                        $video_id = $yt_input; 
+                    }
             ?>
                 <div class="lst-container-ultra is-loading" 
-                     data-video-id="<?php echo esc_attr($video_id); ?>" 
-                     onclick="lstLaunchStory('<?php echo esc_js($video_id); ?>', '<?php echo esc_js($label); ?>', '<?php echo esc_js($product_id); ?>')">
+                     data-video-id="<?php echo esc_attr( $video_id ); ?>" 
+                     onclick="lstLaunchStory('<?php echo esc_js( $video_id ); ?>', '<?php echo esc_js( $label ); ?>', '<?php echo esc_js( $product_id ); ?>')">
                     
-                    <div class="lst-circle-ultra" id="circle-<?php echo esc_attr($video_id); ?>">
-                        <img src="<?php echo esc_url($bulle_url); ?>" 
+                    <div class="lst-circle-ultra" id="circle-<?php echo esc_attr( $video_id ); ?>">
+                        <img src="<?php echo esc_url( $bulle_url ); ?>" 
                              class="lst-img-ultra" 
-                             alt="<?php echo esc_attr($label); ?>" 
+                             alt="<?php echo esc_attr( $label ); ?>" 
                              onload="this.parentElement.parentElement.classList.remove('is-loading')">
                         <div class="lst-play-ultra">
                             <svg viewBox="0 0 24 24" fill="white" width="10" height="10"><path d="M8 5v14l11-7z"/></svg>
                         </div>
                     </div>
-                    <div class="lst-label-ultra"><?php echo esc_html($label); ?></div>
+                    <div class="lst-label-ultra"><?php echo esc_html( $label ); ?></div>
                 </div>
-            <?php endif; endfor; ?>
+            <?php 
+                } // End if.
+            } // End for.
+            ?>
         </div>
     </div>
     <?php 
     $output = ob_get_clean();
     // Nettoyage des balises <p> parasites de WordPress
-    return preg_replace(array('/<p[^>]*>/', '/<\/p>/', '/<br[^>]*>/'), '', $output);
+    return preg_replace( array( '/<p[^>]*>/', '/<\/p>/', '/<br[^>]*>/' ), '', $output );
 }
 add_shortcode( 'bulle_video_finale', 'lst_video_story_shortcode' );
 
