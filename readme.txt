@@ -2,7 +2,7 @@
 Contributors: Lucas-tsl
 Tags: video, woocommerce, story, instagram, product display
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.9
 Requires PHP: 7.2
 Stable tag: 1.0.0
 License: GPLv2 or later
