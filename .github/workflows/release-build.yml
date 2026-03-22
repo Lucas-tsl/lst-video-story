@@ -8,6 +8,8 @@ jobs:
   build:
     name: Build Release Artifact
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
