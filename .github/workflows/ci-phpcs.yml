@@ -20,14 +20,11 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          tools: phpcs
+          tools: cs2pr, phpcs
 
-      - name: Install Dependencies
-        run: |
-          composer init --no-interaction
-          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
-          composer require --dev wp-coding-standards/wpcs:"^3.0"
-          ./vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs
-
-      - name: Run PHP CodeSniffer
-        run: ./vendor/bin/phpcs --standard=WordPress --extensions=php --ignore=vendor/ .
+      - name: Run PHPCS with WordPress Coding Standards
+        uses: 10up/wpcs-action@v1.4
+        with:
+          standard: 'WordPress'
+          paths: '.'
+          extra_args: '--ignore=vendor/,node_modules/ --extensions=php'
