@@ -55,11 +55,11 @@ function lst_video_story_shortcode() {
     <div class="lst-wrapper-ultra">
         <div class="lst-row-ultra" id="lst-row">
             <?php 
-            for ( $i = 1; $i <= 4; $i++ ) { 
+            for ( $i = 1; $i <= 4; $i++ ) {
                 $yt_input  = get_field( 'id_video_youtube_' . $i );
                 $bulle_url = get_field( 'apercu_video_bulle_' . $i );
                 $label     = get_field( 'label_bulle_' . $i ) ? get_field( 'label_bulle_' . $i ) : __( 'Story', 'lst-video-story' );
-                
+
                 if ( $yt_input && $bulle_url ) {
                     // Extraction ID Youtube sécurisée
                     if ( preg_match( '%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $yt_input, $match ) ) {
