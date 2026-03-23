@@ -7,7 +7,7 @@
  * Author:      Lucas Trotesiel
  * Author URI:  https://github.com/Lucas-tsl
  * License:     GPLv2 or later
- * Text Domain: lst-video-story
+ * Text Domain: lst-video-story-bubble
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -58,7 +58,7 @@ function lst_video_story_shortcode() {
             for ( $i = 1; $i <= 4; $i++ ) {
                 $yt_input  = get_field( 'id_video_youtube_' . $i );
                 $bulle_url = get_field( 'apercu_video_bulle_' . $i );
-                $label     = get_field( 'label_bulle_' . $i ) ? get_field( 'label_bulle_' . $i ) : __( 'Story', 'lst-video-story' );
+                $label     = get_field( 'label_bulle_' . $i ) ? get_field( 'label_bulle_' . $i ) : __( 'Story', 'lst-video-story-bubble' );
 
                 if ( $yt_input && $bulle_url ) {
                     // Extraction ID Youtube sécurisée
