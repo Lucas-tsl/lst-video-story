@@ -78,7 +78,7 @@ function lst_video_story_shortcode() {
                              alt="<?php echo esc_attr( $label ); ?>" 
                              onload="this.parentElement.parentElement.classList.remove('is-loading')">
                         <div class="lst-play-ultra">
-                            <svg viewBox="0 0 24 24" fill="white" width="10" height="10"><path d="M8 5v14l11-7z"/></svg>
+                            <span class="lst-play-icon" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div class="lst-label-ultra"><?php echo esc_html( $label ); ?></div>
