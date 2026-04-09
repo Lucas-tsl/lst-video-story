@@ -3,7 +3,7 @@
  * Plugin Name: LST Video Story Bubble
  * Plugin URI:  https://github.com/Lucas-tsl/lst-video-story
  * Description: Add interactive Instagram-style video stories to WooCommerce.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      Lucas Trotesiel
  * Author URI:  https://github.com/Lucas-tsl
  * License:     GPLv2 or later
@@ -23,7 +23,7 @@ function lst_enqueue_assets() {
         'lst-story-style', 
         plugin_dir_url( __FILE__ ) . 'assets/css/style.css', 
         array(), 
-        '1.0.0' 
+        '1.0.1' 
     );
 
     // JS
@@ -31,7 +31,7 @@ function lst_enqueue_assets() {
         'lst-story-script', 
         plugin_dir_url( __FILE__ ) . 'assets/js/script.js', 
         array(), 
-        '1.0.0', 
+        '1.0.1', 
         true 
     );
 }
@@ -50,43 +50,62 @@ function lst_video_story_shortcode() {
     if ( ! $product ) return '';
 
     $product_id = $product->get_id();
+    $stories    = array();
+
+    for ( $i = 1; $i <= 4; $i++ ) {
+        $yt_input        = get_field( 'id_video_youtube_' . $i );
+        $preview_mp4_url = get_field( 'apercu_video_bulle_' . $i );
+        $label_raw       = get_field( 'label_bulle_' . $i );
+        $label           = $label_raw ? $label_raw : __( 'Story', 'lst-video-story-bubble' );
+
+        if ( $yt_input && $preview_mp4_url ) {
+            // Extraction ID Youtube sécurisée
+            if ( preg_match( '%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $yt_input, $match ) ) {
+                $video_id = $match[1];
+            } else {
+                $video_id = $yt_input;
+            }
+
+            if ( ! empty( $video_id ) ) {
+                $stories[] = array(
+                    'video_id' => $video_id,
+                    'preview'  => $preview_mp4_url,
+                    'label'    => $label,
+                );
+            }
+        }
+    }
+
+    if ( empty( $stories ) ) {
+        return '';
+    }
 
     ob_start(); ?>
     <div class="lst-wrapper-ultra">
         <div class="lst-row-ultra" id="lst-row">
-            <?php 
-            for ( $i = 1; $i <= 4; $i++ ) {
-                $yt_input  = get_field( 'id_video_youtube_' . $i );
-                $bulle_url = get_field( 'apercu_video_bulle_' . $i );
-                $label     = get_field( 'label_bulle_' . $i ) ? get_field( 'label_bulle_' . $i ) : __( 'Story', 'lst-video-story-bubble' );
-
-                if ( $yt_input && $bulle_url ) {
-                    // Extraction ID Youtube sécurisée
-                    if ( preg_match( '%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|shorts)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $yt_input, $match ) ) {
-                        $video_id = $match[1];
-                    } else { 
-                        $video_id = $yt_input; 
-                    }
-            ?>
+            <?php foreach ( $stories as $story ) : ?>
                 <div class="lst-container-ultra is-loading" 
-                     data-video-id="<?php echo esc_attr( $video_id ); ?>" 
-                     onclick="lstLaunchStory('<?php echo esc_js( $video_id ); ?>', '<?php echo esc_js( $label ); ?>', '<?php echo esc_js( $product_id ); ?>')">
+                     data-video-id="<?php echo esc_attr( $story['video_id'] ); ?>" 
+                     onclick="lstLaunchStory('<?php echo esc_js( $story['video_id'] ); ?>', '<?php echo esc_js( $story['label'] ); ?>', '<?php echo esc_js( $product_id ); ?>')">
                     
-                    <div class="lst-circle-ultra" id="circle-<?php echo esc_attr( $video_id ); ?>">
-                        <img src="<?php echo esc_url( $bulle_url ); ?>" 
-                             class="lst-img-ultra" 
-                             alt="<?php echo esc_attr( $label ); ?>" 
-                             onload="this.parentElement.parentElement.classList.remove('is-loading')">
+                    <div class="lst-circle-ultra" id="circle-<?php echo esc_attr( $story['video_id'] ); ?>">
+                        <video class="lst-preview-video-ultra"
+                               muted
+                               loop
+                               autoplay
+                               playsinline
+                               preload="metadata"
+                               aria-label="<?php echo esc_attr( sprintf( __( 'Aperçu vidéo %s', 'lst-video-story-bubble' ), $story['label'] ) ); ?>"
+                               onloadeddata="this.parentElement.parentElement.classList.remove('is-loading')">
+                            <source src="<?php echo esc_url( $story['preview'] ); ?>" type="video/mp4">
+                        </video>
                         <div class="lst-play-ultra">
                             <span class="lst-play-icon" aria-hidden="true"></span>
                         </div>
                     </div>
-                    <div class="lst-label-ultra"><?php echo esc_html( $label ); ?></div>
+                    <div class="lst-label-ultra"><?php echo esc_html( $story['label'] ); ?></div>
                 </div>
-            <?php 
-                } // End if.
-            } // End for.
-            ?>
+            <?php endforeach; ?>
         </div>
     </div>
     <?php 

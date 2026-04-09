@@ -4,7 +4,7 @@ Tags: video, woocommerce, story, instagram, product display
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,10 @@ Currently, the plugin focuses on embedding YouTube videos securely and cleanly.
 1. Visual example of how the video story bubbles look on a standard WooCommerce product layout.
 
 == Changelog ==
+
+= 1.0.1 =
+* Hide the shortcode wrapper completely when no story bubble is configured.
+* Keep YouTube video sound enabled in the modal player.
 
 = 1.0.0 =
 * Initial release. Setup of shortcode, WP best practices and escaping methods.

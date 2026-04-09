@@ -7,7 +7,7 @@ Ce plugin WordPress sur-mesure permet d'intégrer des bulles de "Stories" intera
 ## ✨ Points Forts
 - **Expérience Captive :** Double bouclier invisible (`.lst-guard`) qui bloque les liens sortants vers YouTube (titre, logo, partage).
 - **Format 9:16 Vertical :** Lecteur optimisé pour les formats mobiles type TikTok/Shorts.
-- **Performance & UX :** - **Skeleton Loader :** Pulsation visuelle pendant le chargement des GIFs.
+- **Performance & UX :** - **Skeleton Loader :** Pulsation visuelle pendant le chargement des aperçus MP4.
     - **Memory Tracking :** Les bulles déjà vues deviennent grises (`localStorage`).
 - **Slider "Aimanté" :** Défilement horizontal fluide sur mobile avec recalage automatique (*Scroll Snap*).
 - **Compatibilité Mobile :** Forçage du mode `playsinline` pour éviter l'ouverture de l'app YouTube native sur iOS.
@@ -31,7 +31,7 @@ Pour que le plugin fonctionne, créez un groupe de champs assigné aux **Produit
 | ID du champ | Type | Description |
 | :--- | :--- | :--- |
 | `id_video_youtube_X` | Texte | L'ID de la vidéo (ex: `GfUYq9lvZLQ`). |
-| `apercu_video_bulle_X` | Image | Le GIF animé ou l'image de la bulle. |
+| `apercu_video_bulle_X` | URL | URL directe d'un aperçu vidéo **MP4** pour la bulle. |
 | `label_bulle_X` | Texte | Le texte sous la bulle (ex: "TEXTURE"). |
 
 ---
@@ -56,11 +56,12 @@ Pour empêcher le client de s'échapper sur YouTube, le plugin superpose des zon
 ## 💡 Conseils de Qualité
 1. **Source :** Utilisez des vidéos uploadées en **1080p** sur YouTube.
 2. **Traitement :** Attendez que YouTube ait terminé le traitement "HD" avant de juger la qualité sur le site.
-3. **Mute :** La vidéo démarre sans son par défaut (obligatoire pour l'autoplay mobile). L'utilisateur peut l'activer via les contrôles YouTube au centre.
+3. **Son :** La vidéo s'ouvre avec le son YouTube activé (selon les règles autoplay du navigateur).
 
 ---
 
 ## 📝 Journal des modifications (Changelog)
+- **v8.1 :** Masquage complet du bloc quand aucune bulle n'est configurée + son YouTube conservé.
 - **v8.0 :** Ajout des "Guards" anti-clic et optimisation de la qualité `vq=hd1080`.
 - **v7.0 :** Nettoyage automatique des balises `<p>` parasites de WordPress.
 - **v6.0 :** Intégration du Skeleton Loader et du localStorage pour les vues.
