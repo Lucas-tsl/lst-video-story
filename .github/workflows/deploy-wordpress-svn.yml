@@ -59,6 +59,7 @@ jobs:
 
           rsync -a --delete \
             --exclude '.github' \
+            --exclude '.git' \
             --exclude '.wordpress-org' \
             --exclude '.gitignore' \
             --exclude '.gitattributes' \
@@ -88,3 +89,9 @@ jobs:
           svn status
 
           svn commit -m "Deploy ${VERSION} to WordPress.org SVN" --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}" --no-auth-cache --non-interactive
+          cd "${SVN_DIR}"
+          svn update --set-depth infinity
+          svn copy trunk "tags/${VERSION}"
+          svn add tags --force
+          svn status
+          svn commit -m "Tag ${VERSION}" --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}" --no-auth-cache --non-interactive
