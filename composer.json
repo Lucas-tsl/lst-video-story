@@ -2,8 +2,7 @@
   "name": "lucas-tsl/lst-video-story",
   "description": "Product Video Story Bubble - WordPress Plugin",
   "require-dev": {
-    "wp-coding-standards/wpcs": "^3.0",
-    "phpcsutils/phpcsutils": "^1.0"
+    "wp-coding-standards/wpcs": "^3.0"
   },
   "config": {
     "allow-plugins": {
