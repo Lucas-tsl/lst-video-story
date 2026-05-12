@@ -3,7 +3,7 @@
  * Plugin Name: LST Video Story Bubble
  * Plugin URI:  https://github.com/Lucas-tsl/lst-video-story
  * Description: Add interactive Instagram-style video stories to WooCommerce.
- * Version:     1.0.1
+ * Version:     1.1.3
  * Author:      Lucas Trotesiel
  * Author URI:  https://github.com/Lucas-tsl
  * License:     GPLv2 or later
@@ -23,7 +23,7 @@ function lst_enqueue_assets() {
         'lst-story-style', 
         plugin_dir_url( __FILE__ ) . 'assets/css/style.css', 
         array(), 
-        '1.0.1' 
+        '1.1.3' 
     );
 
     // JS
@@ -31,7 +31,7 @@ function lst_enqueue_assets() {
         'lst-story-script', 
         plugin_dir_url( __FILE__ ) . 'assets/js/script.js', 
         array(), 
-        '1.0.1', 
+        '1.1.3', 
         true 
     );
 }

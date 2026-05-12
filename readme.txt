@@ -4,7 +4,7 @@ Tags: video, woocommerce, story, instagram, product display
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.2
-Stable tag: 1.0.1
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,9 @@ Check that for at least one index (`1`, `2`, `3`, or `4`), both fields are fille
 1. Visual example of how the video story bubbles look on a standard WooCommerce product layout.
 
 == Changelog ==
+
+= 1.1.3 =
+* Release for 1.1.3: bumped versions and minor fixes.
 
 = 1.0.1 =
 * Hide the shortcode wrapper completely when no story bubble is configured.
