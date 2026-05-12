@@ -1,0 +1,90 @@
+name: Deploy to WordPress.org SVN
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SVN_URL: https://plugins.svn.wordpress.org/lst-video-story-bubble
+      PLUGIN_SLUG: lst-video-story-bubble
+      ASSETS_DIR: .wordpress-org
+      MAIN_PLUGIN_FILE: lst-video-story.php
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Subversion
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y subversion
+
+      - name: Build and deploy to WordPress.org SVN
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${SVN_USERNAME:-}" || -z "${SVN_PASSWORD:-}" ]]; then
+            echo "SVN_USERNAME and SVN_PASSWORD secrets are required."
+            exit 1
+          fi
+
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "Deploying version ${VERSION}"
+
+          WORKDIR="${RUNNER_TEMP}/wporg-${PLUGIN_SLUG}"
+          SVN_DIR="${WORKDIR}/svn"
+
+          rm -rf "${WORKDIR}"
+          mkdir -p "${WORKDIR}"
+
+          svn checkout --depth immediates "${SVN_URL}" "${SVN_DIR}"
+          cd "${SVN_DIR}"
+          svn update --set-depth infinity trunk
+          svn update --set-depth infinity assets
+
+          find trunk -mindepth 1 -maxdepth 1 ! -name '.svn' -exec rm -rf {} +
+          find assets -mindepth 1 -maxdepth 1 ! -name '.svn' -exec rm -rf {} +
+
+          rsync -a --delete \
+            --exclude '.github' \
+            --exclude '.wordpress-org' \
+            --exclude '.gitignore' \
+            --exclude '.gitattributes' \
+            --exclude 'README.md' \
+            --exclude 'image' \
+            --exclude 'assets/json' \
+            "${GITHUB_WORKSPACE}/" trunk/
+
+          rsync -a --delete "${GITHUB_WORKSPACE}/${ASSETS_DIR}/" assets/
+
+          perl -i -pe "s/^(\\s*\\*\\s*Version:\\s*).*$/${1}${VERSION}/" "trunk/${MAIN_PLUGIN_FILE}"
+          perl -i -pe "s/^(Stable tag:\\s*).*$/${1}${VERSION}/" trunk/readme.txt
+
+          svn add trunk --force >/dev/null
+          svn add assets --force >/dev/null
+
+          for file in assets/*.png assets/*.jpg assets/*.jpeg assets/*.gif assets/*.svg; do
+            [[ -e "${file}" ]] || continue
+            case "${file}" in
+              *.png) svn propset svn:mime-type image/png "${file}" >/dev/null ;;
+              *.jpg|*.jpeg) svn propset svn:mime-type image/jpeg "${file}" >/dev/null ;;
+              *.gif) svn propset svn:mime-type image/gif "${file}" >/dev/null ;;
+              *.svg) svn propset svn:mime-type image/svg+xml "${file}" >/dev/null ;;
+            esac
+          done
+
+          svn status
+
+          svn commit -m "Deploy ${VERSION} to WordPress.org SVN" --username "${SVN_USERNAME}" --password "${SVN_PASSWORD}" --no-auth-cache --non-interactive

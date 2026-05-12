@@ -1,5 +1,5 @@
 === LST Video Story Bubble ===
-Contributors: Lucas-tsl
+Contributors: lucastsl
 Tags: video, woocommerce, story, instagram, product display
 Requires at least: 5.0
 Tested up to: 6.9
