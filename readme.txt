@@ -1,4 +1,4 @@
-=== LST Video Story Bubble ===
+=== Product Video Story Bubble ===
 Contributors: lucastsl
 Tags: video, woocommerce, story, instagram, product display
 Requires at least: 5.0

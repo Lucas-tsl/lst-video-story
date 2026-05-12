@@ -1,4 +1,4 @@
-# 🎞️ LST Video Story Bubble (V8 - Final Armor)
+# 🎞️ Product Video Story Bubble (V8 - Final Armor)
 
 Ce plugin WordPress sur-mesure permet d'intégrer des bulles de "Stories" interactives (style Instagram) sur les fiches produits WooCommerce. Il transforme l'expérience client en permettant de visualiser des vidéos de démonstration (Unboxing, Texture, Application) sans jamais quitter le site.
 
