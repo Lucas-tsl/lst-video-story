@@ -24,8 +24,8 @@
     display: flex !important; 
     align-items: center !important; 
     justify-content: center !important;
-    /* Empêcher le contenu de déborder du cercle */
-    overflow: hidden !important;
+    /* Empêcher le contenu de déborder du cercle sauf le badge */
+    overflow: visible !important;
     box-sizing: border-box !important;
 }
 
@@ -47,6 +47,7 @@
     object-fit: cover !important;
     border-radius: 50% !important;
     display: block !important;
+    overflow: hidden !important;
 }
 
 /* Le badge PLAY (à cheval sur le bord) */
@@ -62,7 +63,7 @@
     align-items: center !important; 
     justify-content: center !important; 
     border: 2px solid rgba(255,255,255,0.95) !important; 
-    z-index: 10 !important; /* Force l'affichage au-dessus de tout */
+    z-index: 9999 !important; /* Force l'affichage au-dessus de tout le contenu */
     box-shadow: 0 3px 8px rgba(0,0,0,0.35) !important;
 }
 .lst-play-icon {
