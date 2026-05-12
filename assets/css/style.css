@@ -24,7 +24,9 @@
     display: flex !important; 
     align-items: center !important; 
     justify-content: center !important;
-    /* Supprimer overflow: hidden ici pour laisser dépasser le badge */
+    /* Empêcher le contenu de déborder du cercle */
+    overflow: hidden !important;
+    box-sizing: border-box !important;
 }
 
 /* L'image à l'intérieur doit rester ronde */
@@ -33,6 +35,17 @@
     height: 100% !important; 
     object-fit: cover !important; 
     border-radius: 50% !important; 
+    display: block !important;
+}
+
+/* Video preview inside the circle: fill, cover and stay rounded */
+.lst-preview-video-ultra {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
     display: block !important;
 }
 
