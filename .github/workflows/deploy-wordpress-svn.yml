@@ -69,8 +69,8 @@ jobs:
 
           rsync -a --delete "${GITHUB_WORKSPACE}/${ASSETS_DIR}/" assets/
 
-          perl -i -pe "s/^(\\s*\\*\\s*Version:\\s*).*$/${1}${VERSION}/" "trunk/${MAIN_PLUGIN_FILE}"
-          perl -i -pe "s/^(Stable tag:\\s*).*$/${1}${VERSION}/" trunk/readme.txt
+          sed -i -E "s/^(\\s*\\*\\s*Version:\\s*).*/\\1${VERSION}/" "trunk/${MAIN_PLUGIN_FILE}"
+          sed -i -E "s/^(Stable tag:\\s*).*/\\1${VERSION}/" trunk/readme.txt
 
           svn add trunk --force >/dev/null
           svn add assets --force >/dev/null
