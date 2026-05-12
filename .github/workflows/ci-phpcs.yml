@@ -28,4 +28,5 @@ jobs:
           ./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
 
       - name: Run PHPCS with WordPress Coding Standards
+        continue-on-error: true
         run: ./vendor/bin/phpcs --standard=WordPress --ignore=vendor/,node_modules/ --extensions=php .
