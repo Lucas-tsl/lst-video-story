@@ -20,12 +20,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          tools: composer, phpcs, cs2pr
+          tools: composer
 
       - name: Install WordPress Coding Standards
         run: |
           composer install
-          phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
+          ./vendor/bin/phpcs --config-set installed_paths vendor/wp-coding-standards/wpcs
 
       - name: Run PHPCS with WordPress Coding Standards
-        run: phpcs --standard=WordPress --ignore=vendor/,node_modules/ --extensions=php --report=checkstyle . | cs2pr
+        run: ./vendor/bin/phpcs --standard=WordPress --ignore=vendor/,node_modules/ --extensions=php .
