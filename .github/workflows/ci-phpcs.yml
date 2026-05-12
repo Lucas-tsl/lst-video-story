@@ -27,5 +27,4 @@ jobs:
         with:
           standard: 'WordPress'
           paths: '.'
-          repo_branch: 'develop'
           extra_args: '--ignore=vendor/,node_modules/ --extensions=php'
