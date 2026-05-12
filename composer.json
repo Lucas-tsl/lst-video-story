@@ -1,0 +1,12 @@
+{
+  "name": "lucas-tsl/lst-video-story",
+  "description": "Product Video Story Bubble - WordPress Plugin",
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^3.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
+}
